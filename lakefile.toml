@@ -1,0 +1,29 @@
+name = "asymptotic_one_factorization"
+version = "0.1.0"
+defaultTargets = ["AOF", "AOFChallenge", "AOFSolution"]
+requiresModuleSystem = true
+
+[leanOptions]
+relaxedAutoImplicit = false
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.35.0-rc3"
+
+[[require]]
+name = "vizing"
+git = "https://github.com/jtraverso/vizing"
+rev = "33b2de836095cf92bc1dec33b6f8787e4036bbc6"
+
+[[lean_lib]]
+name = "AOF"
+globs = ["AOF.+"]
+
+[[lean_lib]]
+name = "AOFChallenge"
+roots = ["AOFChallenge"]
+
+[[lean_lib]]
+name = "AOFSolution"
+roots = ["AOFSolution"]

@@ -1,0 +1,142 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "Asymptotic 1-factorization of dense regular graphs (Perković–Reed, via Vaughan)"
+  description: >-
+    A Lean 4 / Mathlib proof of the asymptotic form of the Chetwynd–Hilton 1-factorization
+    conjecture (Perković and Reed 1997, Häggkvist): for every ε > 0 there is N such that every
+    d-regular simple graph on 2n vertices with n ≥ N and d ≥ (1 + ε) n is 1-factorizable, i.e. its
+    line graph is d-colourable (one_factorization); the integer form with (q + 1) n ≤ q d for q ≥ 1
+    is one_factorization_of_ge. The proof follows Vaughan (arXiv:1010.5192) for multiplicity 1: a
+    balanced bipartition A, Aᶜ with |d_A(v) − d_{Aᶜ}(v)| < s for every vertex (Lemma 13, here by a
+    counting Chernoff bound with no probability theory), equitable colourings of the two sides with
+    matched class sizes (Vizing and McDiarmid's equalisation, from the registered Vizing entry),
+    5-edge alternating-path exchanges until every colour class is a perfect matching, completion of
+    the classes of the leftover inside edges by Hall's theorem, and a decomposition of the remaining
+    regular bipartite graph into perfect matchings (Hall). Vaughan's sizes n^{2/3} and n^{5/6} are
+    replaced by linear sizes s = ⌊a/(200q)⌋ and t = ⌊a/6⌋ with a = ⌊n/q⌋; N is explicit,
+    N = L (512 L³ + 4) with L = 200 q² for d ≥ (1 + 1/q) n (very large). No definitions beyond
+    Mathlib's. Two statements.
+  authors:
+    - "Juan Pablo Traverso Gianini"
+  license: "Apache-2.0"
+  responsible_maintainers:
+    - "Juan Pablo Traverso Gianini"
+
+classification:
+  arxiv: ["math.CO"]
+  msc2020: ["05C15", "05C70"]
+
+repository:
+  role: "substantive-development"
+
+sources:
+  - title: "Edge coloring regular graphs of high degree"
+    authors:
+      - "Ljubomir Perković"
+      - "Bruce Reed"
+    id: "doi:10.1016/S0012-365X(96)00202-6"
+    type: "paper"
+    location: "Discrete Mathematics 165/166 (1997), 567–578."
+    relationship: "formalizes"
+    note: >-
+      The theorem (regular graphs of order 2n and degree at least (1 + ε) n are 1-factorizable for
+      large n), as stated by Vaughan (Theorem 3). The paper itself was not consulted; the proof
+      follows Vaughan.
+    license: "all rights reserved"
+    author_endorsement: "not-contacted"
+  - title: "An Asymptotic Version of the Multigraph 1-Factorization Conjecture"
+    authors:
+      - "E. R. Vaughan"
+    id: "arXiv:1010.5192"
+    type: "paper"
+    location: "arXiv:1010.5192v1 (2010): Theorem 4 with r = 1, Lemmas 9, 13, 14."
+    relationship: "formalizes"
+    note: >-
+      The proof formalized, for simple graphs (multiplicity r = 1). One gap in the counting of Step
+      2 is repaired: a vertex of B whose edge of colour c crosses the bipartition is not incident
+      with a good edge of colour c inside B, but Vaughan's count of the vertices not incident with a
+      good c-edge omits them; they are at most 3 (2s + 2) and are added to the count (an extra
+      invariant bounds them). The multigraph case r ≥ 2 is not formalized.
+    license: "arXiv non-exclusive license"
+    author_endorsement: "not-contacted"
+  - title: "Regular graphs of high degree are 1-factorizable"
+    authors:
+      - "A. G. Chetwynd"
+      - "A. J. W. Hilton"
+    id: "doi:10.1112/plms/s3-50.2.193"
+    type: "paper"
+    location: "Proceedings of the London Mathematical Society 50 (1985), 193–206."
+    relationship: "background"
+    note: "The 1-factorization conjecture (d ≥ n for order 2n); its exact form for large n is due to Csaba–Kühn–Lo–Osthus–Treglown."
+    license: "all rights reserved"
+    author_endorsement: "not-contacted"
+
+related_formalizations:
+  - id: "PALOMAR-2026-10-15-000004 v2 (jtraverso/vizing @ 33b2de8)"
+    relationship: "builds-on"
+    note: >-
+      Pinned dependency: LeanPool.Vizing.exists_equitable_edge_colouring (Vizing's theorem with
+      McDiarmid's equalisation: equitable proper edge colourings with any number c ≥ Δ + 1 of
+      colours, classes of size at most ⌈|E|/c⌉).
+  - id: "PALOMAR-2026-11-04-000016 v2 (jtraverso/plantholt-overfull-criterion)"
+    relationship: "related"
+    note: "Chetwynd–Hilton 1985 (degree ≥ 6n/7 of order 2n) for all n; the present theorem lowers the density to (1 + ε) n for large n."
+
+status:
+  scope: >-
+    Simple graphs only (Vaughan's r = 1), with an ineffective-in-practice but explicit N; the
+    exact 1-factorization conjecture (Csaba–Kühn–Lo–Osthus–Treglown) and the multigraph version
+    are not covered.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: []
+
+automation:
+  methods:
+    - method: "agent"
+      models: ["Claude Opus 5.5"]
+      framework: "Claude Code (Anthropic)"
+      tool_setup: >-
+        Read Vaughan's arXiv paper, wrote the Lean development (AOF/, about 3,100 lines), the
+        Challenge/Solution pair and the packaging under the author's direction. Checked with a local
+        build against the pinned dependency, #print axioms and a comparison of the elaborated
+        Challenge and Solution statements (pp.all) (Lean v4.35.0-rc3, Mathlib
+        c55e6e786f49471c72fbddbec5415808896aec1e).
+      cost:
+        wall_time: "a few hours"
+        spend_usd: "subscription-based"
+        hardware: "local machine"
+      prompting_notes: "Natural-language instructions in Spanish, directed by the author."
+  spend_usd: "subscription-based"
+  notes: >-
+    The result was chosen by the human author; the Lean development is AI-written under the
+    author's direction and mechanically verified: no sorry, axioms limited to propext,
+    Classical.choice and Quot.sound, identical elaborated statements in the Challenge and the
+    Solution.
+
+fidelity:
+  divergences: >-
+    1-factorizable is stated as "the line graph is d-colourable" (equivalent for d-regular graphs).
+    Vaughan's thresholds n^{2/3}, n^{5/6} are replaced by linear sizes, which only changes N; the
+    balanced bipartition is obtained by counting sign vectors instead of a probabilistic argument.
+
+review:
+  status: "agent-reviewed"
+  reviewers:
+    - "Claude Opus 5.5 (AI agent in Claude Code, acting for the author)"
+  notes: >-
+    Agent review by Claude Opus 5.5, distinct from the mechanical verification: every step of
+    Vaughan's Section 4 was checked while formalizing it; one omission in the Step 2 count was
+    found and repaired (see sources). No independent human review has been performed. The result
+    is classical; no mathematical novelty is claimed.
+
+alignment:
+  namespace: "PerkovicReed"
+  statements:
+    - {source: "Perković–Reed 1997 / Vaughan Theorem 3 (integer form)", lean: "PerkovicReed.one_factorization_of_ge", module: "AOFChallenge", status: "proved"}
+    - {source: "Perković–Reed 1997 / Vaughan Theorem 3", lean: "PerkovicReed.one_factorization", module: "AOFChallenge", status: "proved"}
+
+acknowledgements: >-
+  Mathlib and the Lean community.

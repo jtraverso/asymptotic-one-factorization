@@ -1,0 +1,15 @@
+{
+  "challenge_module": "AOFChallenge",
+  "solution_module": "AOFSolution",
+  "theorem_names": [
+    "PerkovicReed.one_factorization_of_ge",
+    "PerkovicReed.one_factorization"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": true
+}
